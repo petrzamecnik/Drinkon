@@ -7,4 +7,7 @@
     <string name="title_by_ingredients">By ingredients</string>
     <string name="title_history">History</string>
     <string name="title_favorites">Favorites</string>
+    <string name="name">Name</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instructions">Instructions</string>
 </resources>
