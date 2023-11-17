@@ -1,5 +1,6 @@
 package com.example.drinkon.ui.drinks
 
+import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
@@ -33,7 +34,19 @@ class DrinksFragment : Fragment() {
 
         val recyclerView: RecyclerView = view.findViewById(R.id.recyclerViewDrinks)
         val drinks = viewModel.getVodkaDrinksMock() // Or your data source
-        val adapter = DrinksAdapter(drinks)
+        val adapter = DrinksAdapter(drinks, object : DrinksAdapter.OnDrinkClickListener {
+            override fun onDrinkClick(drink: DrinksViewModel.Drink) {
+                val intent = Intent(activity, DrinkDetailActivity::class.java)
+                intent.putExtra("DRINK_NAME", drink.name)
+                intent.putExtra("DRINK_INSTRUCTIONS", drink.instructions)
+
+                val bundle = Bundle()
+                bundle.putStringArray("DRINK_INGREDIENTS", drink.ingredients.toTypedArray())
+                intent.putExtras(bundle)
+
+                startActivity(intent)
+            }
+        })
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(context)
     }
@@ -51,5 +64,9 @@ class DrinksFragment : Fragment() {
         }
 
     }
+
+}
+
+private fun Intent.putExtra(s: String, ingredients: List<String>) {
 
 }
